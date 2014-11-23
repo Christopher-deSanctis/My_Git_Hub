@@ -1,0 +1,93 @@
+var dataWindow = Ti.UI.createWindow({
+	title : "Data",
+	backgroundImage: "restbackground.png",
+	//backgroundColor : "white",
+	fullscreen : true,
+	
+});
+
+var dataTableView = Ti.UI.createTableView({
+
+	style : Ti.UI.iPhone.TableViewStyle.GROUPED,
+	backgroundImage : "walkingdeadback.png",
+
+});
+
+//FUNCTION TO GATHER INFORMATION
+
+function getDetail(x) {
+
+	var detailPage = Ti.UI.createWindow({
+        backgroundImage: "restbackground.png",
+		//backgroundColor : "gray",
+		fullscreen : true,
+		title : "Characters"
+
+	});
+
+	var detailText = Ti.UI.createLabel({//to add the image here just add a new (image view window)
+
+		text : x.desc,
+		color: "white",
+		font : {
+			fontFamily : "Helvetica Neue",
+			fontSize : "10dp",
+			
+		},
+		right : "30dp",
+		left : "30dp",
+		top : "30dp"
+	});
+
+	var detailImage = Ti.UI.createImageView({
+
+		image : x.info,
+		right : "70dp",
+		bottom : "0dp",
+		//left: "10dp,"
+	});
+
+	detailPage.add(detailImage);
+
+	detailPage.add(detailText);
+	navWindow.openWindow(detailPage);
+};
+
+var tableSection = [];
+
+// loop to fill in the information //
+for (var n in allCharacters) {
+
+	viewSections = Ti.UI.createTableViewSection({
+		headerTitle : allCharacters[n].title,
+		
+
+	});
+	for ( i = 0; i < allCharacters[n].details.length; i++) {
+
+		rows = Ti.UI.createTableViewRow({
+           
+			title : allCharacters[n].details[i].title,
+			desc : allCharacters[n].details[i].desc,
+			info : allCharacters[n].details[i].image,
+		});
+
+		viewSections.add(rows);
+
+		rows.addEventListener("click", function(e) {
+			getDetail(e.source);
+		});
+
+	};
+	tableSection.push(viewSections);
+
+};
+
+dataWindow.add(dataTableView);
+dataTableView.setData(tableSection);
+
+dataView.addEventListener("click", function() {
+	navWindow.openWindow(dataWindow);
+}); 
+Status API Training Shop Blog About
+© 2014 GitHub, Inc. Terms Privacy Security Contact
